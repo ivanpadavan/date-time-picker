@@ -170,14 +170,27 @@
         )
     });
 
-    const run_proc = function (cmd, callBack, options) {
-        var proc = exec(cmd, function (err, stdout, stderr) {
-            if (options === undefined) options = {};
-            if (options.outFilter !== undefined) stdout = options.outFilter(stdout);
-            if (options.errFilter !== undefined) stderr = options.errFilter(stderr);
-            process.stdout.write(stdout);
-            process.stdout.write(stderr);
-            callBack(err);
-        });
+    var spawn = require('child_process').spawn;
+    const run_proc = function (cmd, callback, options) {
+        var isWin = process.platform === "win32";
+        if (isWin) {
+            if (!cmd) return callback();
+            var p = spawn('sh', ['-c', cmd], {
+                stdio: 'inherit'
+            });
+            p.on('close', function (code) {
+                if (code !== 0) return callback(new Error('Command failed', code, cmd));
+                callback();
+            });
+        } else {
+            var proc = exec(cmd, function (err, stdout, stderr) {
+                if (options === undefined) options = {};
+                if (options.outFilter !== undefined) stdout = options.outFilter(stdout);
+                if (options.errFilter !== undefined) stderr = options.errFilter(stderr);
+                process.stdout.write(stdout);
+                process.stdout.write(stderr);
+                callBack(err);
+            });
+        }
     };
 })();

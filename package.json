@@ -15,10 +15,13 @@
     "type": "git",
     "url": "https://github.com/DanielYKPan/date-time-picker.git"
   },
-  "jsnext:main": "picker.js",
-  "module": "picker.js",
-  "types": "picker.d.ts",
-  "main": "picker.bundle.js",
+  "scripts": {
+    "prepare": "gulp all"
+  },
+  "jsnext:main": "npmdist/picker.js",
+  "module": "npmdist/picker.js",
+  "types": "npmdist/picker.d.ts",
+  "main": "npmdist/picker.bundle.js",
   "peerDependencies": {
     "@angular/cdk": "^7.0.0"
   },
