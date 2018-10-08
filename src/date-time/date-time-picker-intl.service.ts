@@ -15,58 +15,58 @@ export class OwlDateTimeIntl {
     readonly changes: Subject<void> = new Subject<void>();
 
     /** A label for the up second button (used by screen readers).  */
-    upSecondLabel = 'Add a second';
+    upSecondLabel = 'Секундой позжк';
 
     /** A label for the down second button (used by screen readers).  */
-    downSecondLabel = 'Minus a second';
+    downSecondLabel = 'Секундой раньше';
 
     /** A label for the up minute button (used by screen readers).  */
-    upMinuteLabel = 'Add a minute';
+    upMinuteLabel = 'Минутой позже';
 
     /** A label for the down minute button (used by screen readers).  */
-    downMinuteLabel = 'Minus a minute';
+    downMinuteLabel = 'Минутой раньше';
 
     /** A label for the up hour button (used by screen readers).  */
-    upHourLabel = 'Add a hour';
+    upHourLabel = 'Часом позже';
 
     /** A label for the down hour button (used by screen readers).  */
-    downHourLabel = 'Minus a hour';
+    downHourLabel = 'Часом раньше';
 
     /** A label for the previous month button (used by screen readers). */
-    prevMonthLabel = 'Previous month';
+    prevMonthLabel = 'Пред. месяц';
 
     /** A label for the next month button (used by screen readers). */
-    nextMonthLabel = 'Next month';
+    nextMonthLabel = 'След. месяц';
 
     /** A label for the previous year button (used by screen readers). */
-    prevYearLabel = 'Previous year';
+    prevYearLabel = 'Пред. год';
 
     /** A label for the next year button (used by screen readers). */
-    nextYearLabel = 'Next year';
+    nextYearLabel = 'След. год';
 
     /** A label for the previous multi-year button (used by screen readers). */
-    prevMultiYearLabel: string = 'Previous 21 years';
+    prevMultiYearLabel: string = 'Пред. 21 год';
 
     /** A label for the next multi-year button (used by screen readers). */
-    nextMultiYearLabel: string = 'Next 21 years';
+    nextMultiYearLabel: string = 'След 21 год';
 
     /** A label for the 'switch to month view' button (used by screen readers). */
-    switchToMonthViewLabel = 'Change to month view';
+    switchToMonthViewLabel = 'Вбрать день';
 
     /** A label for the 'switch to year view' button (used by screen readers). */
-    switchToMultiYearViewLabel: string = 'Choose month and year';
+    switchToMultiYearViewLabel: string = 'Выбрать месяц и год';
 
     /** A label for the cancel button */
-    cancelBtnLabel = 'Cancel';
+    cancelBtnLabel = 'Отмена';
 
     /** A label for the set button */
-    setBtnLabel = 'Set';
+    setBtnLabel = 'Установить';
 
     /** A label for the range 'from' in picker info */
-    rangeFromLabel = 'From';
+    rangeFromLabel = 'От';
 
     /** A label for the range 'to' in picker info */
-    rangeToLabel = 'To';
+    rangeToLabel = 'До';
 
     /** A label for the hour12 button (AM) */
     hour12AMLabel = 'AM';
