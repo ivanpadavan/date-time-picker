@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "gulp all",
-    "update_dist": "sh git subtree push --prefix npmdist origin dist"
+    "update_dist": "git subtree push --prefix npmdist origin dist"
   },
   "jsnext:main": "npmdist/picker.js",
   "module": "npmdist/picker.js",

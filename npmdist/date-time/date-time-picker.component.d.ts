@@ -35,6 +35,7 @@ export declare class OwlDateTimeComponent<T> extends OwlDateTime<T> implements O
     private _opened;
     opened: boolean;
     scrollStrategy: ScrollStrategy;
+    closeOnSelect: boolean;
     afterPickerClosed: EventEmitter<any>;
     afterPickerOpen: EventEmitter<any>;
     yearSelected: EventEmitter<T>;
