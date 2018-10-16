@@ -48,6 +48,7 @@ var OwlDateTimeComponent = (function (_super) {
         _this._pickerType = 'both';
         _this._pickerMode = 'popup';
         _this._opened = false;
+        _this.closeOnSelect = true;
         _this.afterPickerClosed = new EventEmitter();
         _this.afterPickerOpen = new EventEmitter();
         _this.yearSelected = new EventEmitter();
@@ -346,7 +347,9 @@ var OwlDateTimeComponent = (function (_super) {
         else if (this.isInRangeMode) {
             this.confirmSelectedChange.emit(this.selecteds);
         }
-        this.close();
+        if (this.closeOnSelect) {
+            this.close();
+        }
         return;
     };
     OwlDateTimeComponent.prototype.openAsDialog = function () {
@@ -446,6 +449,7 @@ var OwlDateTimeComponent = (function (_super) {
         "disabled": [{ type: Input },],
         "opened": [{ type: Input },],
         "scrollStrategy": [{ type: Input },],
+        "closeOnSelect": [{ type: Input },],
         "afterPickerClosed": [{ type: Output },],
         "afterPickerOpen": [{ type: Output },],
         "yearSelected": [{ type: Output },],
