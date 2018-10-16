@@ -181,6 +181,12 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
     public scrollStrategy: ScrollStrategy;
 
     /**
+     * Whether the datepicker should close after selection
+     */
+    @Input()
+    public closeOnSelect = true;
+
+    /**
      * Callback when the picker is closed
      * */
     @Output() afterPickerClosed = new EventEmitter<any>();
@@ -487,8 +493,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
         } else if (this.isInRangeMode) {
             this.confirmSelectedChange.emit(this.selecteds);
         }
-
-        this.close();
+        if (this.closeOnSelect) {
+            this.close();
+        }
         return;
     }
 
