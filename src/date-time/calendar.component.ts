@@ -188,6 +188,7 @@ export class OwlCalendarComponent<T> implements OnInit, AfterContentInit, AfterV
         }
     }
 
+    @HostBinding('attr.data-view')
     private _currentView: 'month' | 'year' | 'multi-years';
     get currentView(): 'month' | 'year' | 'multi-years' {
         return this._currentView;
