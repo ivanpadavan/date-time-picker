@@ -103,7 +103,7 @@ export abstract class OwlDateTime<T> {
      * @default {0} -- 0: Sunday ~ 6: Saturday
      * @type {number}
      * */
-    private _firstDayOfWeek = 0;
+    private _firstDayOfWeek = 1;
     @Input()
     get firstDayOfWeek() {
         return this._firstDayOfWeek;
