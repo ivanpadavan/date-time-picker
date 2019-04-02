@@ -1,6 +1,6 @@
 {
   "name": "ng-pick-datetime",
-  "version": "7.0.1",
+  "version": "7.0.3",
   "description": "Angular Date Time Picker",
   "keywords": [
     "Angular",
@@ -19,10 +19,10 @@
     "build": "gulp all",
     "update_dist": "git subtree push --prefix npmdist origin dist"
   },
-  "jsnext:main": "npmdist/picker.js",
-  "module": "npmdist/picker.js",
-  "types": "npmdist/picker.d.ts",
-  "main": "npmdist/picker.bundle.js",
+  "jsnext:main": "picker.js",
+  "module": "picker.js",
+  "types": "picker.d.ts",
+  "main": "picker.bundle.js",
   "peerDependencies": {
     "@angular/cdk": "^7.0.0"
   },

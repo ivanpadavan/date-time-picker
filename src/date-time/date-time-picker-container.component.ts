@@ -381,23 +381,22 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
             return null;
         }
 
-        // if the given calendar day is after or equal to 'from',
-        // set ths given date as 'to'
-        // otherwise, set the value depends on this.activeSelectedIndex
-        // if interval becomes invalid erase "to".
+        // if both options already setted arise selected dates
+        // if only one is set then set both in appropriate order
+        // if no selection select one
         if (this.picker.selectMode === 'range') {
-            if (this.picker.selecteds && this.picker.selecteds.length && !to && from &&
-                this.dateTimeAdapter.differenceInCalendarDays(result, from) >= 0) {
-                to = result;
-                this.activeSelectedIndex = 1;
-            } else {
-                this.activeSelectedIndex
-                    ? to = result
-                    : from = result;
-
-                if (this.dateTimeAdapter.differenceInCalendarDays(from, to) >=0 ) {
-                    to = undefined
+            if (this.picker.selecteds && this.picker.selecteds.length) {
+                if (to) {
+                    from = result;
+                    to = undefined;
+                } else if (from) {
+                    to = result;
+                    if (this.dateTimeAdapter.differenceInCalendarDays(from, to) >= 0) {
+                        [from, to] = [to, from];
+                    }
                 }
+            } else {
+                from = result;
             }
         } else if (this.picker.selectMode === 'rangeFrom') {
             from = result;
