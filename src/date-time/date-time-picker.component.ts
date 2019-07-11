@@ -21,7 +21,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
-    BlockScrollStrategy,
+    BlockScrollStrategy, ConnectedPosition,
     Overlay,
     OverlayConfig,
     OverlayRef,
@@ -179,6 +179,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
      * */
     @Input()
     public scrollStrategy: ScrollStrategy;
+
+    @Input()
+    public preferRightAlign = false;
 
     /**
      * Whether the datepicker should close after selection
@@ -576,16 +579,25 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
      * Create the popup PositionStrategy.
      * */
     private createPopupPositionStrategy(): PositionStrategy {
+        const leftAlign: ConnectedPosition[] = [
+            {originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top'},
+            {originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom'},
+        ];
+        const rightAlign: ConnectedPosition[] = [
+            {originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top'},
+            {originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom'},
+        ];
+        const positions = this.preferRightAlign
+            ? [...rightAlign, ...leftAlign]
+            : [...leftAlign, ...rightAlign];
+
         return this.overlay.position()
             .flexibleConnectedTo(this._dtInput.elementRef)
             .withTransformOriginOn('.owl-dt-container')
             .withFlexibleDimensions(false)
             .withPush(false)
             .withPositions([
-                {originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top'},
-                {originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom'},
-                {originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top'},
-                {originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom'},
+                ...positions,
                 {originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'top', offsetY: -176},
                 {originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'top', offsetY: -352},
             ]);
