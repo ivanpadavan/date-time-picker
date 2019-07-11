@@ -189,7 +189,7 @@
                 if (options.errFilter !== undefined) stderr = options.errFilter(stderr);
                 process.stdout.write(stdout);
                 process.stdout.write(stderr);
-                callBack(err);
+                callback(err);
             });
         }
     };
