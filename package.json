@@ -17,6 +17,7 @@
   },
   "scripts": {
     "build": "gulp all",
+    "build-dev": "gulp all-dev",
     "update_dist": "git subtree push --prefix npmdist origin dist"
   },
   "jsnext:main": "picker.js",

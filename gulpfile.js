@@ -146,6 +146,9 @@
                 './README.md'
             ]).pipe(gulp.dest('./npmdist'));
     });
+    gulp.task('copy.npmdist.to.backbone', function() {
+        return gulp.src('./npmdist').pipe(gulp.dest('../mi-frontend-backbone/node_modules/ng-pick-datetime'));
+    });
 
     gulp.task('all', function (cb) {
         runSequence(
@@ -166,6 +169,13 @@
             'copy.dist.to.npmdist',
             'copy.root.files.to.npmdist.dir',
             'delete.tmp',
+            cb
+        )
+    });
+    gulp.task('all-dev', function (cb) {
+        runSequence(
+            'all',
+            'copy.npmdist.to.backbone',
             cb
         )
     });
