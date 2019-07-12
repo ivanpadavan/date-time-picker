@@ -216,6 +216,10 @@ export class OwlCalendarComponent<T> implements OnInit, AfterContentInit, AfterV
         return this._currentView === 'month';
     }
 
+    get isYearView() {
+        return this._currentView === 'year';
+    }
+
     /**
      * Date filter for the month and year view
      * @type {Function}
@@ -278,8 +282,16 @@ export class OwlCalendarComponent<T> implements OnInit, AfterContentInit, AfterV
      * Toggle between month view and year view
      * @return {void}
      * */
-    public toggleViews(): void {
-        this.currentView = this._currentView == 'month' ? 'multi-years' : 'month';
+    public toggleBetweenMonthAndYearViews(): void {
+        this.currentView = this._currentView == 'month' ? 'year' : 'month';
+    }
+
+    /**
+     * Toggle between year view and multi-year view
+     * @return {void}
+     * */
+    public toggleBetweenYearAndMultiYearViews(): void {
+        this.currentView = this._currentView == 'year' ? 'multi-years' : 'year';
     }
 
     /**
