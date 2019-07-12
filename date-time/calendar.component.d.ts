@@ -40,6 +40,7 @@ export declare class OwlCalendarComponent<T> implements OnInit, AfterContentInit
     readonly isInRangeMode: boolean;
     readonly showControlArrows: boolean;
     readonly isMonthView: boolean;
+    readonly isYearView: boolean;
     dateFilterForViews: (date: T) => boolean;
     readonly owlDTCalendarClass: boolean;
     private intlChangesSub;
@@ -49,7 +50,8 @@ export declare class OwlCalendarComponent<T> implements OnInit, AfterContentInit
     ngAfterContentInit(): void;
     ngAfterViewChecked(): void;
     ngOnDestroy(): void;
-    toggleViews(): void;
+    toggleBetweenMonthAndYearViews(): void;
+    toggleBetweenYearAndMultiYearViews(): void;
     previousClicked(): void;
     nextClicked(): void;
     dateSelected(date: T): void;
@@ -61,6 +63,6 @@ export declare class OwlCalendarComponent<T> implements OnInit, AfterContentInit
     focusActiveCell(): void;
     selectYearInMultiYearView(normalizedYear: T): void;
     selectMonthInYearView(normalizedMonth: T): void;
-    private isSameView(date1, date2);
-    private getValidDate(obj);
+    private isSameView;
+    private getValidDate;
 }

@@ -10,8 +10,8 @@ export declare abstract class DateTimeAdapter<T> {
     protected locale: any;
     protected _localeChanges: Subject<void>;
     readonly localeChanges: Observable<void>;
-    protected readonly millisecondsInDay: number;
-    protected readonly milliseondsInMinute: number;
+    protected readonly millisecondsInDay = 86400000;
+    protected readonly milliseondsInMinute = 60000;
     abstract getYear(date: T): number;
     abstract getMonth(date: T): number;
     abstract getDay(date: T): number;

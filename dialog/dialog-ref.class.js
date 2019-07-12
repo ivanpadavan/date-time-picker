@@ -25,7 +25,7 @@ var OwlDialogRef = (function () {
             _this.locationChanged.unsubscribe();
             _this._afterClosed$.next(_this.result);
             _this._afterClosed$.complete();
-            _this.componentInstance = (null);
+            _this.componentInstance = null;
         });
         this.overlayRef.keydownEvents()
             .pipe(filter(function (event) { return event.keyCode === ESCAPE && !_this.disableClose; }))

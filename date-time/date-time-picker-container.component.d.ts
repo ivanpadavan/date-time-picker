@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, TemplateRef } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlCalendarComponent } from './calendar.component';
@@ -11,6 +11,7 @@ export declare class OwlDateTimeContainerComponent<T> implements OnInit, AfterCo
     private elmRef;
     private pickerIntl;
     private dateTimeAdapter;
+    userTemplate: TemplateRef<any>;
     calendar: OwlCalendarComponent<T>;
     timer: OwlTimerComponent<T>;
     picker: OwlDateTime<T>;
@@ -39,7 +40,7 @@ export declare class OwlDateTimeContainerComponent<T> implements OnInit, AfterCo
     readonly owlDTContainerDisabledClass: boolean;
     readonly owlDTContainerId: string;
     readonly owlDTContainerAnimation: any;
-    constructor(cdRef: ChangeDetectorRef, elmRef: ElementRef, pickerIntl: OwlDateTimeIntl, dateTimeAdapter: DateTimeAdapter<T>);
+    constructor(cdRef: ChangeDetectorRef, elmRef: ElementRef, pickerIntl: OwlDateTimeIntl, dateTimeAdapter: DateTimeAdapter<T>, userTemplate: TemplateRef<any>);
     ngOnInit(): void;
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
@@ -50,10 +51,10 @@ export declare class OwlDateTimeContainerComponent<T> implements OnInit, AfterCo
     onSetClicked(event: any): void;
     handleClickOnInfoGroup(event: any, index: number): void;
     handleKeydownOnInfoGroup(event: any, next: any, index: number): void;
-    private setActiveSelectedIndex(index);
-    private initPicker();
-    private dateSelectedInSingleMode(date);
-    private dateSelectedInRangeMode(date);
-    private updateAndCheckCalendarDate(date);
-    private focusPicker();
+    private setActiveSelectedIndex;
+    private initPicker;
+    private dateSelectedInSingleMode;
+    private dateSelectedInRangeMode;
+    private updateAndCheckCalendarDate;
+    private focusPicker;
 }

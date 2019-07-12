@@ -1,13 +1,28 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, HostBinding, Inject, Input, Optional, Output, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
@@ -268,38 +283,84 @@ var OwlDateTimeInlineComponent = (function (_super) {
     OwlDateTimeInlineComponent.prototype.selectMonth = function (normalizedMonth) {
         this.monthSelected.emit(normalizedMonth);
     };
-    OwlDateTimeInlineComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'owl-date-time-inline',
-                    template: "<owl-date-time-container></owl-date-time-container>",
-                    styles: [""],
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    preserveWhitespaces: false,
-                    providers: [
-                        OWL_DATETIME_VALUE_ACCESSOR,
-                    ],
-                },] },
-    ];
-    OwlDateTimeInlineComponent.ctorParameters = function () { return [
-        { type: ChangeDetectorRef, },
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DATE_TIME_FORMATS,] },] },
-    ]; };
-    OwlDateTimeInlineComponent.propDecorators = {
-        "container": [{ type: ViewChild, args: [OwlDateTimeContainerComponent,] },],
-        "pickerType": [{ type: Input },],
-        "disabled": [{ type: Input },],
-        "selectMode": [{ type: Input },],
-        "startAt": [{ type: Input },],
-        "dateTimeFilter": [{ type: Input, args: ['owlDateTimeFilter',] },],
-        "minDateTime": [{ type: Input, args: ['min',] },],
-        "maxDateTime": [{ type: Input, args: ['max',] },],
-        "value": [{ type: Input },],
-        "values": [{ type: Input },],
-        "yearSelected": [{ type: Output },],
-        "monthSelected": [{ type: Output },],
-        "owlDTInlineClass": [{ type: HostBinding, args: ['class.owl-dt-inline',] },],
-    };
+    __decorate([
+        ViewChild(OwlDateTimeContainerComponent),
+        __metadata("design:type", OwlDateTimeContainerComponent)
+    ], OwlDateTimeInlineComponent.prototype, "container", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], OwlDateTimeInlineComponent.prototype, "pickerType", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTimeInlineComponent.prototype, "disabled", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], OwlDateTimeInlineComponent.prototype, "selectMode", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInlineComponent.prototype, "startAt", null);
+    __decorate([
+        Input('owlDateTimeFilter'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], OwlDateTimeInlineComponent.prototype, "dateTimeFilter", null);
+    __decorate([
+        Input('min'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInlineComponent.prototype, "minDateTime", null);
+    __decorate([
+        Input('max'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInlineComponent.prototype, "maxDateTime", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInlineComponent.prototype, "value", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], OwlDateTimeInlineComponent.prototype, "values", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeInlineComponent.prototype, "yearSelected", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeInlineComponent.prototype, "monthSelected", void 0);
+    __decorate([
+        HostBinding('class.owl-dt-inline'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeInlineComponent.prototype, "owlDTInlineClass", null);
+    OwlDateTimeInlineComponent = __decorate([
+        Component({
+            selector: 'owl-date-time-inline',
+            template: "<owl-date-time-container></owl-date-time-container>",
+            styles: [""],
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            preserveWhitespaces: false,
+            providers: [
+                OWL_DATETIME_VALUE_ACCESSOR,
+            ],
+        }),
+        __param(1, Optional()),
+        __param(2, Optional()), __param(2, Inject(OWL_DATE_TIME_FORMATS)),
+        __metadata("design:paramtypes", [ChangeDetectorRef,
+            DateTimeAdapter, Object])
+    ], OwlDateTimeInlineComponent);
     return OwlDateTimeInlineComponent;
 }(OwlDateTime));
 export { OwlDateTimeInlineComponent };

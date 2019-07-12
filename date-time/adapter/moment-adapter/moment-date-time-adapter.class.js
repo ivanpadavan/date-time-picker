@@ -1,13 +1,28 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { Inject, Injectable, Optional, InjectionToken } from '@angular/core';
 import * as _moment from 'moment/moment';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from '../date-time-adapter.class';
@@ -207,13 +222,12 @@ var MomentDateTimeAdapter = (function (_super) {
         }
         return (this.options && this.options.useUtc) ? moment.utc.apply(moment, args) : moment.apply(void 0, args);
     };
-    MomentDateTimeAdapter.decorators = [
-        { type: Injectable },
-    ];
-    MomentDateTimeAdapter.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DATE_TIME_LOCALE,] },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS,] },] },
-    ]; };
+    MomentDateTimeAdapter = __decorate([
+        Injectable(),
+        __param(0, Optional()), __param(0, Inject(OWL_DATE_TIME_LOCALE)),
+        __param(1, Optional()), __param(1, Inject(OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS)),
+        __metadata("design:paramtypes", [String, Object])
+    ], MomentDateTimeAdapter);
     return MomentDateTimeAdapter;
 }(DateTimeAdapter));
 export { MomentDateTimeAdapter };

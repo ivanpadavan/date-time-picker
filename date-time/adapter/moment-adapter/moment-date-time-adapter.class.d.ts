@@ -8,7 +8,7 @@ export declare const OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS: InjectionToken<OwlMom
 export declare function OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS_FACTORY(): OwlMomentDateTimeAdapterOptions;
 export declare class MomentDateTimeAdapter extends DateTimeAdapter<Moment> {
     private owlDateTimeLocale;
-    private options;
+    private options?;
     private _localeData;
     constructor(owlDateTimeLocale: string, options?: OwlMomentDateTimeAdapterOptions);
     setLocale(locale: string): void;
@@ -44,5 +44,5 @@ export declare class MomentDateTimeAdapter extends DateTimeAdapter<Moment> {
     format(date: Moment, displayFormat: any): string;
     parse(value: any, parseFormat: any): Moment | null;
     deserialize(value: any): Moment | null;
-    private createMoment(...args);
+    private createMoment;
 }

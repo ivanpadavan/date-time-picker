@@ -1,3 +1,15 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostBinding, Inject, Input, Optional, Output, ViewChild } from '@angular/core';
 import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
 import { DateTimeAdapter } from './adapter/date-time-adapter.class';
@@ -358,37 +370,85 @@ var OwlMonthViewComponent = (function () {
     OwlMonthViewComponent.prototype.focusActiveCell = function () {
         this.calendarBodyElm.focusActiveCell();
     };
-    OwlMonthViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'owl-date-time-month-view',
-                    exportAs: 'owlYearView',
-                    template: "<table class=\"owl-dt-calendar-table owl-dt-calendar-month-table\" [class.owl-dt-calendar-only-current-month]=\"hideOtherMonths\"><thead class=\"owl-dt-calendar-header\"><tr class=\"owl-dt-weekdays\"><th *ngFor=\"let weekday of weekdays\" [attr.aria-label]=\"weekday.long\" class=\"owl-dt-weekday\" scope=\"col\"><span>{{weekday.short}}</span></th></tr><tr><th class=\"owl-dt-calendar-table-divider\" aria-hidden=\"true\" colspan=\"7\"></th></tr></thead><tbody owl-date-time-calendar-body role=\"grid\" [rows]=\"days\" [todayValue]=\"todayDate\" [selectedValues]=\"selectedDates\" [selectMode]=\"selectMode\" [activeCell]=\"activeCell\" (keydown)=\"handleCalendarKeydown($event)\" (select)=\"selectCalendarCell($event)\"></tbody></table>",
-                    styles: [""],
-                    preserveWhitespaces: false,
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                },] },
-    ];
-    OwlMonthViewComponent.ctorParameters = function () { return [
-        { type: ChangeDetectorRef, },
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DATE_TIME_FORMATS,] },] },
-    ]; };
-    OwlMonthViewComponent.propDecorators = {
-        "hideOtherMonths": [{ type: Input },],
-        "firstDayOfWeek": [{ type: Input },],
-        "selectMode": [{ type: Input },],
-        "selected": [{ type: Input },],
-        "selecteds": [{ type: Input },],
-        "pickerMoment": [{ type: Input },],
-        "dateFilter": [{ type: Input },],
-        "minDate": [{ type: Input },],
-        "maxDate": [{ type: Input },],
-        "selectedChange": [{ type: Output },],
-        "userSelection": [{ type: Output },],
-        "pickerMomentChange": [{ type: Output },],
-        "calendarBodyElm": [{ type: ViewChild, args: [OwlCalendarBodyComponent,] },],
-        "owlDTCalendarView": [{ type: HostBinding, args: ['class.owl-dt-calendar-view',] },],
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], OwlMonthViewComponent.prototype, "hideOtherMonths", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], OwlMonthViewComponent.prototype, "firstDayOfWeek", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], OwlMonthViewComponent.prototype, "selectMode", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlMonthViewComponent.prototype, "selected", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], OwlMonthViewComponent.prototype, "selecteds", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlMonthViewComponent.prototype, "pickerMoment", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], OwlMonthViewComponent.prototype, "dateFilter", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlMonthViewComponent.prototype, "minDate", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlMonthViewComponent.prototype, "maxDate", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlMonthViewComponent.prototype, "selectedChange", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlMonthViewComponent.prototype, "userSelection", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], OwlMonthViewComponent.prototype, "pickerMomentChange", void 0);
+    __decorate([
+        ViewChild(OwlCalendarBodyComponent),
+        __metadata("design:type", OwlCalendarBodyComponent)
+    ], OwlMonthViewComponent.prototype, "calendarBodyElm", void 0);
+    __decorate([
+        HostBinding('class.owl-dt-calendar-view'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlMonthViewComponent.prototype, "owlDTCalendarView", null);
+    OwlMonthViewComponent = __decorate([
+        Component({
+            selector: 'owl-date-time-month-view',
+            exportAs: 'owlYearView',
+            template: "<table class=\"owl-dt-calendar-table owl-dt-calendar-month-table\" [class.owl-dt-calendar-only-current-month]=\"hideOtherMonths\"><thead class=\"owl-dt-calendar-header\"><tr class=\"owl-dt-weekdays\"><th *ngFor=\"let weekday of weekdays\" [attr.aria-label]=\"weekday.long\" class=\"owl-dt-weekday\" scope=\"col\"><span>{{weekday.short}}</span></th></tr><tr><th class=\"owl-dt-calendar-table-divider\" aria-hidden=\"true\" colspan=\"7\"></th></tr></thead><tbody owl-date-time-calendar-body role=\"grid\" [rows]=\"days\" [todayValue]=\"todayDate\" [selectedValues]=\"selectedDates\" [selectMode]=\"selectMode\" [activeCell]=\"activeCell\" (keydown)=\"handleCalendarKeydown($event)\" (select)=\"selectCalendarCell($event)\"></tbody></table>",
+            styles: [""],
+            preserveWhitespaces: false,
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        }),
+        __param(1, Optional()),
+        __param(2, Optional()), __param(2, Inject(OWL_DATE_TIME_FORMATS)),
+        __metadata("design:paramtypes", [ChangeDetectorRef,
+            DateTimeAdapter, Object])
+    ], OwlMonthViewComponent);
     return OwlMonthViewComponent;
 }());
 export { OwlMonthViewComponent };

@@ -37,7 +37,7 @@ export declare class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     format(date: Date, displayFormat: any): string;
     parse(value: any, parseFormat: any): Date | null;
     deserialize(value: any): Date | null;
-    private createDateWithOverflow(year, month, date, hours?, minutes?, seconds?);
-    private stripDirectionalityCharacters(str);
-    private _format(dtf, date);
+    private createDateWithOverflow;
+    private stripDirectionalityCharacters;
+    private _format;
 }

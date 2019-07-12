@@ -1,3 +1,15 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { Directive, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Inject, Input, Optional, Output, Renderer2 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { DOWN_ARROW } from '@angular/cdk/keycodes';
@@ -471,44 +483,121 @@ var OwlDateTimeInputDirective = (function () {
         }
         return first == second;
     };
-    OwlDateTimeInputDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: 'input[owlDateTime]',
-                    exportAs: 'owlDateTimeInput',
-                    providers: [
-                        OWL_DATETIME_VALUE_ACCESSOR,
-                        OWL_DATETIME_VALIDATORS,
-                    ],
-                },] },
-    ];
-    OwlDateTimeInputDirective.ctorParameters = function () { return [
-        { type: ElementRef, },
-        { type: Renderer2, },
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DATE_TIME_FORMATS,] },] },
-    ]; };
-    OwlDateTimeInputDirective.propDecorators = {
-        "owlDateTime": [{ type: Input },],
-        "owlDateTimeFilter": [{ type: Input },],
-        "_disabled": [{ type: Input },],
-        "min": [{ type: Input },],
-        "max": [{ type: Input },],
-        "selectMode": [{ type: Input },],
-        "rangeSeparator": [{ type: Input },],
-        "value": [{ type: Input },],
-        "values": [{ type: Input },],
-        "dateTimeChange": [{ type: Output },],
-        "dateTimeInput": [{ type: Output },],
-        "owlDateTimeInputAriaHaspopup": [{ type: HostBinding, args: ['attr.aria-haspopup',] },],
-        "owlDateTimeInputAriaOwns": [{ type: HostBinding, args: ['attr.aria-owns',] },],
-        "minIso8601": [{ type: HostBinding, args: ['attr.min',] },],
-        "maxIso8601": [{ type: HostBinding, args: ['attr.max',] },],
-        "owlDateTimeInputDisabled": [{ type: HostBinding, args: ['disabled',] },],
-        "handleKeydownOnHost": [{ type: HostListener, args: ['keydown', ['$event'],] },],
-        "handleBlurOnHost": [{ type: HostListener, args: ['blur', ['$event'],] },],
-        "handleInputOnHost": [{ type: HostListener, args: ['input', ['$event'],] },],
-        "handleChangeOnHost": [{ type: HostListener, args: ['change', ['$event'],] },],
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", OwlDateTimeComponent),
+        __metadata("design:paramtypes", [OwlDateTimeComponent])
+    ], OwlDateTimeInputDirective.prototype, "owlDateTime", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], OwlDateTimeInputDirective.prototype, "owlDateTimeFilter", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], OwlDateTimeInputDirective.prototype, "_disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInputDirective.prototype, "min", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInputDirective.prototype, "max", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], OwlDateTimeInputDirective.prototype, "selectMode", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeInputDirective.prototype, "rangeSeparator", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeInputDirective.prototype, "value", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], OwlDateTimeInputDirective.prototype, "values", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeInputDirective.prototype, "dateTimeChange", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeInputDirective.prototype, "dateTimeInput", void 0);
+    __decorate([
+        HostBinding('attr.aria-haspopup'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeInputDirective.prototype, "owlDateTimeInputAriaHaspopup", null);
+    __decorate([
+        HostBinding('attr.aria-owns'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeInputDirective.prototype, "owlDateTimeInputAriaOwns", null);
+    __decorate([
+        HostBinding('attr.min'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeInputDirective.prototype, "minIso8601", null);
+    __decorate([
+        HostBinding('attr.max'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeInputDirective.prototype, "maxIso8601", null);
+    __decorate([
+        HostBinding('disabled'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeInputDirective.prototype, "owlDateTimeInputDisabled", null);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], OwlDateTimeInputDirective.prototype, "handleKeydownOnHost", null);
+    __decorate([
+        HostListener('blur', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Event]),
+        __metadata("design:returntype", void 0)
+    ], OwlDateTimeInputDirective.prototype, "handleBlurOnHost", null);
+    __decorate([
+        HostListener('input', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], OwlDateTimeInputDirective.prototype, "handleInputOnHost", null);
+    __decorate([
+        HostListener('change', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], OwlDateTimeInputDirective.prototype, "handleChangeOnHost", null);
+    OwlDateTimeInputDirective = __decorate([
+        Directive({
+            selector: 'input[owlDateTime]',
+            exportAs: 'owlDateTimeInput',
+            providers: [
+                OWL_DATETIME_VALUE_ACCESSOR,
+                OWL_DATETIME_VALIDATORS,
+            ],
+        }),
+        __param(2, Optional()),
+        __param(3, Optional()), __param(3, Inject(OWL_DATE_TIME_FORMATS)),
+        __metadata("design:paramtypes", [ElementRef,
+            Renderer2,
+            DateTimeAdapter, Object])
+    ], OwlDateTimeInputDirective);
     return OwlDateTimeInputDirective;
 }());
 export { OwlDateTimeInputDirective };

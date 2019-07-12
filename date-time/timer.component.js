@@ -1,3 +1,15 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, NgZone, Optional, Output } from '@angular/core';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { DateTimeAdapter } from './adapter/date-time-adapter.class';
@@ -244,36 +256,71 @@ var OwlTimerComponent = (function () {
     OwlTimerComponent.prototype.getValidDate = function (obj) {
         return (this.dateTimeAdapter.isDateInstance(obj) && this.dateTimeAdapter.isValid(obj)) ? obj : null;
     };
-    OwlTimerComponent.decorators = [
-        { type: Component, args: [{
-                    exportAs: 'owlDateTimeTimer',
-                    selector: 'owl-date-time-timer',
-                    template: "<owl-date-time-timer-box [upBtnAriaLabel]=\"upHourButtonLabel\" [downBtnAriaLabel]=\"downHourButtonLabel\" [upBtnDisabled]=\"!upHourEnabled()\" [downBtnDisabled]=\"!downHourEnabled()\" [boxValue]=\"hourBoxValue\" [value]=\"hourValue\" [min]=\"0\" [max]=\"23\" [step]=\"stepHour\" [inputLabel]=\"'Hour'\" (inputChange)=\"setHourValueViaInput($event)\" (valueChange)=\"setHourValue($event)\"></owl-date-time-timer-box><owl-date-time-timer-box [showDivider]=\"true\" [upBtnAriaLabel]=\"upMinuteButtonLabel\" [downBtnAriaLabel]=\"downMinuteButtonLabel\" [upBtnDisabled]=\"!upMinuteEnabled()\" [downBtnDisabled]=\"!downMinuteEnabled()\" [value]=\"minuteValue\" [min]=\"0\" [max]=\"59\" [step]=\"stepMinute\" [inputLabel]=\"'Minute'\" (inputChange)=\"setMinuteValue($event)\" (valueChange)=\"setMinuteValue($event)\"></owl-date-time-timer-box><owl-date-time-timer-box *ngIf=\"showSecondsTimer\" [showDivider]=\"true\" [upBtnAriaLabel]=\"upSecondButtonLabel\" [downBtnAriaLabel]=\"downSecondButtonLabel\" [upBtnDisabled]=\"!upSecondEnabled()\" [downBtnDisabled]=\"!downSecondEnabled()\" [value]=\"secondValue\" [min]=\"0\" [max]=\"59\" [step]=\"stepSecond\" [inputLabel]=\"'Second'\" (inputChange)=\"setSecondValue($event)\" (valueChange)=\"setSecondValue($event)\"></owl-date-time-timer-box><div *ngIf=\"hour12Timer\" class=\"owl-dt-timer-hour12\"><button class=\"owl-dt-control-button owl-dt-timer-hour12-box\" type=\"button\" tabindex=\"0\" (click)=\"setMeridiem($event)\"><span class=\"owl-dt-control-button-content\" tabindex=\"-1\">{{hour12ButtonLabel}}</span></button></div>",
-                    styles: [""],
-                    preserveWhitespaces: false,
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                },] },
-    ];
-    OwlTimerComponent.ctorParameters = function () { return [
-        { type: NgZone, },
-        { type: ElementRef, },
-        { type: OwlDateTimeIntl, },
-        { type: ChangeDetectorRef, },
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-    ]; };
-    OwlTimerComponent.propDecorators = {
-        "pickerMoment": [{ type: Input },],
-        "minDateTime": [{ type: Input },],
-        "maxDateTime": [{ type: Input },],
-        "showSecondsTimer": [{ type: Input },],
-        "hour12Timer": [{ type: Input },],
-        "stepHour": [{ type: Input },],
-        "stepMinute": [{ type: Input },],
-        "stepSecond": [{ type: Input },],
-        "selectedChange": [{ type: Output },],
-        "owlDTTimerClass": [{ type: HostBinding, args: ['class.owl-dt-timer',] },],
-        "owlDTTimeTabIndex": [{ type: HostBinding, args: ['attr.tabindex',] },],
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlTimerComponent.prototype, "pickerMoment", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlTimerComponent.prototype, "minDateTime", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlTimerComponent.prototype, "maxDateTime", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], OwlTimerComponent.prototype, "showSecondsTimer", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], OwlTimerComponent.prototype, "hour12Timer", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlTimerComponent.prototype, "stepHour", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlTimerComponent.prototype, "stepMinute", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlTimerComponent.prototype, "stepSecond", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlTimerComponent.prototype, "selectedChange", void 0);
+    __decorate([
+        HostBinding('class.owl-dt-timer'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlTimerComponent.prototype, "owlDTTimerClass", null);
+    __decorate([
+        HostBinding('attr.tabindex'),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [])
+    ], OwlTimerComponent.prototype, "owlDTTimeTabIndex", null);
+    OwlTimerComponent = __decorate([
+        Component({
+            exportAs: 'owlDateTimeTimer',
+            selector: 'owl-date-time-timer',
+            template: "<owl-date-time-timer-box [upBtnAriaLabel]=\"upHourButtonLabel\" [downBtnAriaLabel]=\"downHourButtonLabel\" [upBtnDisabled]=\"!upHourEnabled()\" [downBtnDisabled]=\"!downHourEnabled()\" [boxValue]=\"hourBoxValue\" [value]=\"hourValue\" [min]=\"0\" [max]=\"23\" [step]=\"stepHour\" [inputLabel]=\"'Hour'\" (inputChange)=\"setHourValueViaInput($event)\" (valueChange)=\"setHourValue($event)\"></owl-date-time-timer-box><owl-date-time-timer-box [showDivider]=\"true\" [upBtnAriaLabel]=\"upMinuteButtonLabel\" [downBtnAriaLabel]=\"downMinuteButtonLabel\" [upBtnDisabled]=\"!upMinuteEnabled()\" [downBtnDisabled]=\"!downMinuteEnabled()\" [value]=\"minuteValue\" [min]=\"0\" [max]=\"59\" [step]=\"stepMinute\" [inputLabel]=\"'Minute'\" (inputChange)=\"setMinuteValue($event)\" (valueChange)=\"setMinuteValue($event)\"></owl-date-time-timer-box><owl-date-time-timer-box *ngIf=\"showSecondsTimer\" [showDivider]=\"true\" [upBtnAriaLabel]=\"upSecondButtonLabel\" [downBtnAriaLabel]=\"downSecondButtonLabel\" [upBtnDisabled]=\"!upSecondEnabled()\" [downBtnDisabled]=\"!downSecondEnabled()\" [value]=\"secondValue\" [min]=\"0\" [max]=\"59\" [step]=\"stepSecond\" [inputLabel]=\"'Second'\" (inputChange)=\"setSecondValue($event)\" (valueChange)=\"setSecondValue($event)\"></owl-date-time-timer-box><div *ngIf=\"hour12Timer\" class=\"owl-dt-timer-hour12\"><button class=\"owl-dt-control-button owl-dt-timer-hour12-box\" type=\"button\" tabindex=\"0\" (click)=\"setMeridiem($event)\"><span class=\"owl-dt-control-button-content\" tabindex=\"-1\">{{hour12ButtonLabel}}</span></button></div>",
+            styles: [""],
+            preserveWhitespaces: false,
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        }),
+        __param(4, Optional()),
+        __metadata("design:paramtypes", [NgZone,
+            ElementRef,
+            OwlDateTimeIntl,
+            ChangeDetectorRef,
+            DateTimeAdapter])
+    ], OwlTimerComponent);
     return OwlTimerComponent;
 }());
 export { OwlTimerComponent };

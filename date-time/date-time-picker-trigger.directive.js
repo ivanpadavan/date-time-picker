@@ -1,3 +1,12 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import { ChangeDetectorRef, Directive, HostBinding, HostListener, Input } from '@angular/core';
 import { OwlDateTimeComponent } from './date-time-picker.component';
 import { merge, of as observableOf, Subscription } from 'rxjs';
@@ -54,20 +63,32 @@ var OwlDateTimeTriggerDirective = (function () {
             _this.changeDetector.markForCheck();
         });
     };
-    OwlDateTimeTriggerDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[owlDateTimeTrigger]',
-                },] },
-    ];
-    OwlDateTimeTriggerDirective.ctorParameters = function () { return [
-        { type: ChangeDetectorRef, },
-    ]; };
-    OwlDateTimeTriggerDirective.propDecorators = {
-        "dtPicker": [{ type: Input, args: ['owlDateTimeTrigger',] },],
-        "disabled": [{ type: Input },],
-        "owlDTTriggerDisabledClass": [{ type: HostBinding, args: ['class.owl-dt-trigger-disabled',] },],
-        "handleClickOnHost": [{ type: HostListener, args: ['click', ['$event'],] },],
-    };
+    __decorate([
+        Input('owlDateTimeTrigger'),
+        __metadata("design:type", OwlDateTimeComponent)
+    ], OwlDateTimeTriggerDirective.prototype, "dtPicker", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTimeTriggerDirective.prototype, "disabled", null);
+    __decorate([
+        HostBinding('class.owl-dt-trigger-disabled'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeTriggerDirective.prototype, "owlDTTriggerDisabledClass", null);
+    __decorate([
+        HostListener('click', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Event]),
+        __metadata("design:returntype", void 0)
+    ], OwlDateTimeTriggerDirective.prototype, "handleClickOnHost", null);
+    OwlDateTimeTriggerDirective = __decorate([
+        Directive({
+            selector: '[owlDateTimeTrigger]',
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], OwlDateTimeTriggerDirective);
     return OwlDateTimeTriggerDirective;
 }());
 export { OwlDateTimeTriggerDirective };

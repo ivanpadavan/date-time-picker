@@ -1,26 +1,42 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, InjectionToken, Input, NgZone, Optional, Output, ViewContainerRef } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { coerceArray, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
-import { DateTimeAdapter } from './adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS } from './adapter/date-time-format.class';
-import { OwlDateTime } from './date-time.class';
-import { OwlDialogService } from '../dialog';
+import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
+import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, InjectionToken, Injector, Input, NgZone, Optional, Output, TemplateRef, ViewContainerRef } from '@angular/core';
 import { merge, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { OwlDialogService } from '../dialog';
+import { DateTimeAdapter } from './adapter/date-time-adapter.class';
+import { OWL_DATE_TIME_FORMATS } from './adapter/date-time-format.class';
+import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
+import { OwlDateTime } from './date-time.class';
+import { USER_TEMPLATE_PROVIDER } from './user-template.providers';
 export var OWL_DTPICKER_SCROLL_STRATEGY = new InjectionToken('owl-dtpicker-scroll-strategy');
 export function OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY(overlay) {
     return function () { return overlay.scrollStrategies.block(); };
@@ -32,12 +48,13 @@ export var OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER = {
 };
 var OwlDateTimeComponent = (function (_super) {
     __extends(OwlDateTimeComponent, _super);
-    function OwlDateTimeComponent(overlay, viewContainerRef, dialogService, ngZone, changeDetector, dateTimeAdapter, defaultScrollStrategy, dateTimeFormats, document) {
+    function OwlDateTimeComponent(overlay, viewContainerRef, dialogService, ngZone, injector, changeDetector, dateTimeAdapter, defaultScrollStrategy, dateTimeFormats, document) {
         var _this = _super.call(this, dateTimeAdapter, dateTimeFormats) || this;
         _this.overlay = overlay;
         _this.viewContainerRef = viewContainerRef;
         _this.dialogService = dialogService;
         _this.ngZone = ngZone;
+        _this.injector = injector;
         _this.changeDetector = changeDetector;
         _this.dateTimeAdapter = dateTimeAdapter;
         _this.defaultScrollStrategy = defaultScrollStrategy;
@@ -48,6 +65,7 @@ var OwlDateTimeComponent = (function (_super) {
         _this._pickerType = 'both';
         _this._pickerMode = 'popup';
         _this._opened = false;
+        _this.preferRightAlign = false;
         _this.closeOnSelect = true;
         _this.afterPickerClosed = new EventEmitter();
         _this.afterPickerOpen = new EventEmitter();
@@ -371,7 +389,10 @@ var OwlDateTimeComponent = (function (_super) {
     OwlDateTimeComponent.prototype.openAsPopup = function () {
         var _this = this;
         if (!this.pickerContainerPortal) {
-            this.pickerContainerPortal = new ComponentPortal(OwlDateTimeContainerComponent, this.viewContainerRef);
+            this.pickerContainerPortal = new ComponentPortal(OwlDateTimeContainerComponent, this.viewContainerRef, Injector.create({
+                providers: [USER_TEMPLATE_PROVIDER(this.userTemplate)],
+                parent: this.injector,
+            }));
         }
         if (!this.popupRef) {
             this.createPopup();
@@ -399,62 +420,116 @@ var OwlDateTimeComponent = (function (_super) {
             panelClass: ['owl-dt-popup'].concat(coerceArray(this.panelClass)),
         });
         this.popupRef = this.overlay.create(overlayConfig);
-        merge(this.popupRef.backdropClick(), this.popupRef.detachments(), this.popupRef.keydownEvents().pipe(filter(function (event) {
-            return event.keyCode === ESCAPE ||
-                (_this._dtInput && event.altKey && event.keyCode === UP_ARROW);
-        }))).subscribe(function () { return _this.close(); });
+        merge(this.popupRef.backdropClick(), this.popupRef.detachments(), this.popupRef.keydownEvents().pipe(filter(function (event) { return event.keyCode === ESCAPE ||
+            (_this._dtInput && event.altKey && event.keyCode === UP_ARROW); }))).subscribe(function () { return _this.close(); });
     };
     OwlDateTimeComponent.prototype.createPopupPositionStrategy = function () {
+        var leftAlign = [
+            { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+            { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+        ];
+        var rightAlign = [
+            { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+            { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
+        ];
+        var positions = this.preferRightAlign
+            ? rightAlign.concat(leftAlign) : leftAlign.concat(rightAlign);
         return this.overlay.position()
             .flexibleConnectedTo(this._dtInput.elementRef)
             .withTransformOriginOn('.owl-dt-container')
             .withFlexibleDimensions(false)
             .withPush(false)
-            .withPositions([
-            { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-            { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-            { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
-            { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
+            .withPositions(positions.concat([
             { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'top', offsetY: -176 },
             { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'top', offsetY: -352 },
-        ]);
+        ]));
     };
-    OwlDateTimeComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'owl-date-time',
-                    exportAs: 'owlDateTime',
-                    template: "",
-                    styles: [""],
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    preserveWhitespaces: false,
-                },] },
-    ];
-    OwlDateTimeComponent.ctorParameters = function () { return [
-        { type: Overlay, },
-        { type: ViewContainerRef, },
-        { type: OwlDialogService, },
-        { type: NgZone, },
-        { type: ChangeDetectorRef, },
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-        { type: undefined, decorators: [{ type: Inject, args: [OWL_DTPICKER_SCROLL_STRATEGY,] },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DATE_TIME_FORMATS,] },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [DOCUMENT,] },] },
-    ]; };
-    OwlDateTimeComponent.propDecorators = {
-        "backdropClass": [{ type: Input },],
-        "panelClass": [{ type: Input },],
-        "startAt": [{ type: Input },],
-        "pickerType": [{ type: Input },],
-        "pickerMode": [{ type: Input },],
-        "disabled": [{ type: Input },],
-        "opened": [{ type: Input },],
-        "scrollStrategy": [{ type: Input },],
-        "closeOnSelect": [{ type: Input },],
-        "afterPickerClosed": [{ type: Output },],
-        "afterPickerOpen": [{ type: Output },],
-        "yearSelected": [{ type: Output },],
-        "monthSelected": [{ type: Output },],
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef)
+    ], OwlDateTimeComponent.prototype, "userTemplate", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "backdropClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "panelClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], OwlDateTimeComponent.prototype, "startAt", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], OwlDateTimeComponent.prototype, "pickerType", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], OwlDateTimeComponent.prototype, "pickerMode", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTimeComponent.prototype, "disabled", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTimeComponent.prototype, "opened", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "scrollStrategy", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "preferRightAlign", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "closeOnSelect", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "afterPickerClosed", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "afterPickerOpen", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "yearSelected", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], OwlDateTimeComponent.prototype, "monthSelected", void 0);
+    OwlDateTimeComponent = __decorate([
+        Component({
+            selector: 'owl-date-time',
+            exportAs: 'owlDateTime',
+            template: "",
+            styles: [""],
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            preserveWhitespaces: false,
+        }),
+        __param(6, Optional()),
+        __param(7, Inject(OWL_DTPICKER_SCROLL_STRATEGY)),
+        __param(8, Optional()), __param(8, Inject(OWL_DATE_TIME_FORMATS)),
+        __param(9, Optional()), __param(9, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [Overlay,
+            ViewContainerRef,
+            OwlDialogService,
+            NgZone,
+            Injector,
+            ChangeDetectorRef,
+            DateTimeAdapter, Function, Object, Object])
+    ], OwlDateTimeComponent);
     return OwlDateTimeComponent;
 }(OwlDateTime));
 export { OwlDateTimeComponent };

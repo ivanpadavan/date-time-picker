@@ -47,8 +47,8 @@ export declare class OwlTimerComponent<T> implements OnInit {
     downMinuteEnabled(): boolean;
     upSecondEnabled(): boolean;
     downSecondEnabled(): boolean;
-    private compareHours(amount, comparedDate);
-    private compareMinutes(amount, comparedDate);
-    private compareSeconds(amount, comparedDate);
-    private getValidDate(obj);
+    private compareHours;
+    private compareMinutes;
+    private compareSeconds;
+    private getValidDate;
 }

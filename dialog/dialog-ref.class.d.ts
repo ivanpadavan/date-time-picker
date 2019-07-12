@@ -24,5 +24,5 @@ export declare class OwlDialogRef<T> {
     afterOpen(): Observable<any>;
     beforeClose(): Observable<any>;
     afterClosed(): Observable<any>;
-    private getPositionStrategy();
+    private getPositionStrategy;
 }
