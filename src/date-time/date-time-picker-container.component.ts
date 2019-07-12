@@ -10,9 +10,9 @@ import {
     Component,
     ElementRef,
     HostBinding,
-    HostListener,
+    HostListener, Inject,
     OnInit,
-    Optional,
+    Optional, TemplateRef,
     ViewChild
 } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
@@ -24,6 +24,7 @@ import { OwlDateTime, PickerType } from './date-time.class';
 import { Observable, Subject } from 'rxjs';
 import { owlDateTimePickerAnimations } from './date-time-picker.animations';
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
+import { USER_TEMPLATE } from './user-template.providers';
 
 @Component({
     exportAs: 'owlDateTimeContainer',
@@ -181,8 +182,9 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
     constructor( private cdRef: ChangeDetectorRef,
                  private elmRef: ElementRef,
                  private pickerIntl: OwlDateTimeIntl,
-                 @Optional() private dateTimeAdapter: DateTimeAdapter<T> ) {
-    }
+                 @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
+                 @Optional() @Inject(USER_TEMPLATE) public userTemplate: TemplateRef<any>,
+    ) {}
 
     public ngOnInit() {
     }
