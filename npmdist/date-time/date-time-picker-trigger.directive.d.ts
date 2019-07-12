@@ -13,5 +13,5 @@ export declare class OwlDateTimeTriggerDirective<T> implements OnInit, OnChanges
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
     handleClickOnHost(event: Event): void;
-    private watchStateChanges();
+    private watchStateChanges;
 }

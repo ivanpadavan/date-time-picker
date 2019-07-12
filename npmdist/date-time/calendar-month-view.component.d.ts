@@ -52,14 +52,14 @@ export declare class OwlMonthViewComponent<T> implements OnInit, AfterContentIni
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
     selectCalendarCell(cell: CalendarCell): void;
-    private selectDate(date);
+    private selectDate;
     handleCalendarKeydown(event: KeyboardEvent): void;
-    private generateWeekDays();
-    private generateCalendar();
-    private createDateCell(date, daysDiff);
-    private isDateEnabled(date);
-    private getValidDate(obj);
+    private generateWeekDays;
+    private generateCalendar;
+    private createDateCell;
+    private isDateEnabled;
+    private getValidDate;
     isSameMonth(dateLeft: T, dateRight: T): boolean;
-    private setSelectedDates();
-    private focusActiveCell();
+    private setSelectedDates;
+    private focusActiveCell;
 }

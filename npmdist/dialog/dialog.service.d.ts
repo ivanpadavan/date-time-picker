@@ -34,11 +34,11 @@ export declare class OwlDialogService {
     open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, config?: OwlDialogConfig): OwlDialogRef<any>;
     closeAll(): void;
     getDialogById(id: string): OwlDialogRef<any> | undefined;
-    private attachDialogContent<T>(componentOrTemplateRef, dialogContainer, overlayRef, config);
-    private createInjector<T>(config, dialogRef, dialogContainer);
-    private createOverlay(config);
-    private attachDialogContainer(overlayRef, config);
-    private getOverlayConfig(dialogConfig);
-    private removeOpenDialog(dialogRef);
-    private hideNonDialogContentFromAssistiveTechnology();
+    private attachDialogContent;
+    private createInjector;
+    private createOverlay;
+    private attachDialogContainer;
+    private getOverlayConfig;
+    private removeOpenDialog;
+    private hideNonDialogContentFromAssistiveTechnology;
 }

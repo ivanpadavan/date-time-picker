@@ -47,17 +47,17 @@ export declare class OwlMultiYearViewComponent<T> implements OnInit, AfterConten
     ngOnInit(): void;
     ngAfterContentInit(): void;
     selectCalendarCell(cell: CalendarCell): void;
-    private selectYear(year);
+    private selectYear;
     prevYearList(event: any): void;
     nextYearList(event: any): void;
     generateYearList(): void;
     previousEnabled(): boolean;
     nextEnabled(): boolean;
     handleCalendarKeydown(event: KeyboardEvent): void;
-    private createYearCell(year);
-    private setSelectedYears();
-    private isYearEnabled(year);
-    private isSameYearList(date1, date2);
-    private getValidDate(obj);
-    private focusActiveCell();
+    private createYearCell;
+    private setSelectedYears;
+    private isYearEnabled;
+    private isSameYearList;
+    private getValidDate;
+    private focusActiveCell;
 }

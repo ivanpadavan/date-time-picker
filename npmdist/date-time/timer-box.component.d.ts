@@ -23,6 +23,6 @@ export declare class OwlTimerBoxComponent implements OnInit, OnDestroy {
     upBtnClicked(): void;
     downBtnClicked(): void;
     handleInputChange(val: string): void;
-    private updateValue(value);
-    private updateValueViaInput(value);
+    private updateValue;
+    private updateValueViaInput;
 }

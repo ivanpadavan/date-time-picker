@@ -1,13 +1,28 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Inject, Optional, ViewChild } from '@angular/core';
 import { animate, animateChild, keyframes, style, transition, trigger } from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
@@ -176,49 +191,86 @@ var OwlDialogContainerComponent = (function (_super) {
             this.focusTrap.destroy();
         }
     };
-    OwlDialogContainerComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'owl-dialog-container',
-                    template: "<ng-template cdkPortalOutlet></ng-template>",
-                    animations: [
-                        trigger('slideModal', [
-                            transition('void => enter', [
-                                style(zoomFadeInFrom),
-                                animate('300ms cubic-bezier(0.35, 0, 0.25, 1)', style('*')),
-                                animate('150ms', keyframes([
-                                    style({ transform: 'scale(1)', offset: 0 }),
-                                    style({ transform: 'scale(1.05)', offset: 0.3 }),
-                                    style({ transform: 'scale(.95)', offset: 0.8 }),
-                                    style({ transform: 'scale(1)', offset: 1.0 })
-                                ])),
-                                animateChild()
-                            ], { params: { x: '0px', y: '0px', ox: '50%', oy: '50%', scale: 1 } }),
-                            transition('enter => exit', [
-                                animateChild(),
-                                animate(200, style(zoomFadeIn))
-                            ], { params: { x: '0px', y: '0px', ox: '50%', oy: '50%' } })
-                        ])
-                    ]
-                },] },
-    ];
-    OwlDialogContainerComponent.ctorParameters = function () { return [
-        { type: ChangeDetectorRef, },
-        { type: ElementRef, },
-        { type: FocusTrapFactory, },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [DOCUMENT,] },] },
-    ]; };
-    OwlDialogContainerComponent.propDecorators = {
-        "portalOutlet": [{ type: ViewChild, args: [CdkPortalOutlet,] },],
-        "owlDialogContainerClass": [{ type: HostBinding, args: ['class.owl-dialog-container',] },],
-        "owlDialogContainerTabIndex": [{ type: HostBinding, args: ['attr.tabindex',] },],
-        "owlDialogContainerId": [{ type: HostBinding, args: ['attr.id',] },],
-        "owlDialogContainerRole": [{ type: HostBinding, args: ['attr.role',] },],
-        "owlDialogContainerAriaLabelledby": [{ type: HostBinding, args: ['attr.aria-labelledby',] },],
-        "owlDialogContainerAriaDescribedby": [{ type: HostBinding, args: ['attr.aria-describedby',] },],
-        "owlDialogContainerAnimation": [{ type: HostBinding, args: ['@slideModal',] },],
-        "onAnimationStart": [{ type: HostListener, args: ['@slideModal.start', ['$event'],] },],
-        "onAnimationDone": [{ type: HostListener, args: ['@slideModal.done', ['$event'],] },],
-    };
+    __decorate([
+        ViewChild(CdkPortalOutlet),
+        __metadata("design:type", CdkPortalOutlet)
+    ], OwlDialogContainerComponent.prototype, "portalOutlet", void 0);
+    __decorate([
+        HostBinding('class.owl-dialog-container'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerClass", null);
+    __decorate([
+        HostBinding('attr.tabindex'),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerTabIndex", null);
+    __decorate([
+        HostBinding('attr.id'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerId", null);
+    __decorate([
+        HostBinding('attr.role'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerRole", null);
+    __decorate([
+        HostBinding('attr.aria-labelledby'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerAriaLabelledby", null);
+    __decorate([
+        HostBinding('attr.aria-describedby'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerAriaDescribedby", null);
+    __decorate([
+        HostBinding('@slideModal'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], OwlDialogContainerComponent.prototype, "owlDialogContainerAnimation", null);
+    __decorate([
+        HostListener('@slideModal.start', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], OwlDialogContainerComponent.prototype, "onAnimationStart", null);
+    __decorate([
+        HostListener('@slideModal.done', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], OwlDialogContainerComponent.prototype, "onAnimationDone", null);
+    OwlDialogContainerComponent = __decorate([
+        Component({
+            selector: 'owl-dialog-container',
+            template: "<ng-template cdkPortalOutlet></ng-template>",
+            animations: [
+                trigger('slideModal', [
+                    transition('void => enter', [
+                        style(zoomFadeInFrom),
+                        animate('300ms cubic-bezier(0.35, 0, 0.25, 1)', style('*')),
+                        animate('150ms', keyframes([
+                            style({ transform: 'scale(1)', offset: 0 }),
+                            style({ transform: 'scale(1.05)', offset: 0.3 }),
+                            style({ transform: 'scale(.95)', offset: 0.8 }),
+                            style({ transform: 'scale(1)', offset: 1.0 })
+                        ])),
+                        animateChild()
+                    ], { params: { x: '0px', y: '0px', ox: '50%', oy: '50%', scale: 1 } }),
+                    transition('enter => exit', [
+                        animateChild(),
+                        animate(200, style(zoomFadeIn))
+                    ], { params: { x: '0px', y: '0px', ox: '50%', oy: '50%' } })
+                ])
+            ]
+        }),
+        __param(3, Optional()), __param(3, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [ChangeDetectorRef,
+            ElementRef,
+            FocusTrapFactory, Object])
+    ], OwlDialogContainerComponent);
     return OwlDialogContainerComponent;
 }(BasePortalOutlet));
 export { OwlDialogContainerComponent };

@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Optional, ViewChild } from '@angular/core';
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Inject, Optional, TemplateRef, ViewChild } from '@angular/core';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlCalendarComponent } from './calendar.component';
 import { OwlTimerComponent } from './timer.component';
@@ -6,12 +18,14 @@ import { DateTimeAdapter } from './adapter/date-time-adapter.class';
 import { Subject } from 'rxjs';
 import { owlDateTimePickerAnimations } from './date-time-picker.animations';
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
+import { USER_TEMPLATE } from './user-template.providers';
 var OwlDateTimeContainerComponent = (function () {
-    function OwlDateTimeContainerComponent(cdRef, elmRef, pickerIntl, dateTimeAdapter) {
+    function OwlDateTimeContainerComponent(cdRef, elmRef, pickerIntl, dateTimeAdapter, userTemplate) {
         this.cdRef = cdRef;
         this.elmRef = elmRef;
         this.pickerIntl = pickerIntl;
         this.dateTimeAdapter = dateTimeAdapter;
+        this.userTemplate = userTemplate;
         this.activeSelectedIndex = 0;
         this.hidePicker$ = new Subject();
         this.confirmSelected$ = new Subject();
@@ -287,6 +301,7 @@ var OwlDateTimeContainerComponent = (function () {
         return this.updateAndCheckCalendarDate(date);
     };
     OwlDateTimeContainerComponent.prototype.dateSelectedInRangeMode = function (date) {
+        var _a;
         var from = this.picker.selecteds[0];
         var to = this.picker.selecteds[1];
         var result = this.updateAndCheckCalendarDate(date);
@@ -294,18 +309,20 @@ var OwlDateTimeContainerComponent = (function () {
             return null;
         }
         if (this.picker.selectMode === 'range') {
-            if (this.picker.selecteds && this.picker.selecteds.length && !to && from &&
-                this.dateTimeAdapter.differenceInCalendarDays(result, from) >= 0) {
-                to = result;
-                this.activeSelectedIndex = 1;
-            }
-            else {
-                this.activeSelectedIndex
-                    ? to = result
-                    : from = result;
-                if (this.dateTimeAdapter.differenceInCalendarDays(from, to) >= 0) {
+            if (this.picker.selecteds && this.picker.selecteds.length) {
+                if (to) {
+                    from = result;
                     to = undefined;
                 }
+                else if (from) {
+                    to = result;
+                    if (this.dateTimeAdapter.differenceInCalendarDays(from, to) >= 0) {
+                        _a = [to, from], from = _a[0], to = _a[1];
+                    }
+                }
+            }
+            else {
+                from = result;
             }
         }
         else if (this.picker.selectMode === 'rangeFrom') {
@@ -344,38 +361,76 @@ var OwlDateTimeContainerComponent = (function () {
             this.timer.focus();
         }
     };
-    OwlDateTimeContainerComponent.decorators = [
-        { type: Component, args: [{
-                    exportAs: 'owlDateTimeContainer',
-                    selector: 'owl-date-time-container',
-                    template: "<div [cdkTrapFocus]=\"picker.pickerMode !== 'inline'\" [@fadeInPicker]=\"picker.pickerMode === 'inline'? '' : 'enter'\" class=\"owl-dt-container-inner\"><owl-date-time-calendar *ngIf=\"pickerType === 'both' || pickerType === 'calendar'\" class=\"owl-dt-container-row\" [firstDayOfWeek]=\"picker.firstDayOfWeek\" [(pickerMoment)]=\"pickerMoment\" [selected]=\"picker.selected\" [selecteds]=\"picker.selecteds\" [selectMode]=\"picker.selectMode\" [minDate]=\"picker.minDateTime\" [maxDate]=\"picker.maxDateTime\" [dateFilter]=\"picker.dateTimeFilter\" [startView]=\"picker.startView\" [hideOtherMonths]=\"picker.hideOtherMonths\" (yearSelected)=\"picker.selectYear($event)\" (monthSelected)=\"picker.selectMonth($event)\" (selectedChange)=\"dateSelected($event)\"></owl-date-time-calendar><owl-date-time-timer *ngIf=\"pickerType === 'both' || pickerType === 'timer'\" class=\"owl-dt-container-row\" [pickerMoment]=\"pickerMoment\" [minDateTime]=\"picker.minDateTime\" [maxDateTime]=\"picker.maxDateTime\" [showSecondsTimer]=\"picker.showSecondsTimer\" [hour12Timer]=\"picker.hour12Timer\" [stepHour]=\"picker.stepHour\" [stepMinute]=\"picker.stepMinute\" [stepSecond]=\"picker.stepSecond\" (selectedChange)=\"timeSelected($event)\"></owl-date-time-timer><div *ngIf=\"picker.isInRangeMode\" role=\"radiogroup\" class=\"owl-dt-container-info owl-dt-container-row\"><div role=\"radio\" [tabindex]=\"activeSelectedIndex === 0 ? 0 : -1\" [attr.aria-checked]=\"activeSelectedIndex === 0\" class=\"owl-dt-control owl-dt-container-range owl-dt-container-from\" [ngClass]=\"{'owl-dt-container-info-active': activeSelectedIndex === 0}\" (click)=\"handleClickOnInfoGroup($event, 0)\" (keydown)=\"handleKeydownOnInfoGroup($event, to, 0)\" #from><span class=\"owl-dt-control-content owl-dt-container-range-content\" tabindex=\"-1\"><span class=\"owl-dt-container-info-label\">{{fromLabel}}:</span> <span class=\"owl-dt-container-info-value\">{{fromFormattedValue}}</span></span></div><div role=\"radio\" [tabindex]=\"activeSelectedIndex === 1 ? 0 : -1\" [attr.aria-checked]=\"activeSelectedIndex === 1\" class=\"owl-dt-control owl-dt-container-range owl-dt-container-to\" [ngClass]=\"{'owl-dt-container-info-active': activeSelectedIndex === 1}\" (click)=\"handleClickOnInfoGroup($event, 1)\" (keydown)=\"handleKeydownOnInfoGroup($event, from, 1)\" #to><span class=\"owl-dt-control-content owl-dt-container-range-content\" tabindex=\"-1\"><span class=\"owl-dt-container-info-label\">{{toLabel}}:</span> <span class=\"owl-dt-container-info-value\">{{toFormattedValue}}</span></span></div></div><div *ngIf=\"showControlButtons\" class=\"owl-dt-container-buttons owl-dt-container-row\"><button class=\"owl-dt-control owl-dt-control-button owl-dt-container-control-button\" type=\"button\" tabindex=\"0\" (click)=\"onCancelClicked($event)\"><span class=\"owl-dt-control-content owl-dt-control-button-content\" tabindex=\"-1\">{{cancelLabel}}</span></button> <button class=\"owl-dt-control owl-dt-control-button owl-dt-container-control-button\" type=\"button\" tabindex=\"0\" (click)=\"onSetClicked($event)\"><span class=\"owl-dt-control-content owl-dt-control-button-content\" tabindex=\"-1\">{{setLabel}}</span></button></div></div>",
-                    styles: [""],
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    preserveWhitespaces: false,
-                    animations: [
-                        owlDateTimePickerAnimations.transformPicker,
-                        owlDateTimePickerAnimations.fadeInPicker
-                    ]
-                },] },
-    ];
-    OwlDateTimeContainerComponent.ctorParameters = function () { return [
-        { type: ChangeDetectorRef, },
-        { type: ElementRef, },
-        { type: OwlDateTimeIntl, },
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-    ]; };
-    OwlDateTimeContainerComponent.propDecorators = {
-        "calendar": [{ type: ViewChild, args: [OwlCalendarComponent,] },],
-        "timer": [{ type: ViewChild, args: [OwlTimerComponent,] },],
-        "owlDTContainerClass": [{ type: HostBinding, args: ['class.owl-dt-container',] },],
-        "owlDTPopupContainerClass": [{ type: HostBinding, args: ['class.owl-dt-popup-container',] },],
-        "owlDTDialogContainerClass": [{ type: HostBinding, args: ['class.owl-dt-dialog-container',] },],
-        "owlDTInlineContainerClass": [{ type: HostBinding, args: ['class.owl-dt-inline-container',] },],
-        "owlDTContainerDisabledClass": [{ type: HostBinding, args: ['class.owl-dt-container-disabled',] },],
-        "owlDTContainerId": [{ type: HostBinding, args: ['attr.id',] },],
-        "owlDTContainerAnimation": [{ type: HostBinding, args: ['@transformPicker',] },],
-        "handleContainerAnimationDone": [{ type: HostListener, args: ['@transformPicker.done', ['$event'],] },],
-    };
+    __decorate([
+        ViewChild(OwlCalendarComponent),
+        __metadata("design:type", OwlCalendarComponent)
+    ], OwlDateTimeContainerComponent.prototype, "calendar", void 0);
+    __decorate([
+        ViewChild(OwlTimerComponent),
+        __metadata("design:type", OwlTimerComponent)
+    ], OwlDateTimeContainerComponent.prototype, "timer", void 0);
+    __decorate([
+        HostBinding('class.owl-dt-container'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTContainerClass", null);
+    __decorate([
+        HostBinding('class.owl-dt-popup-container'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTPopupContainerClass", null);
+    __decorate([
+        HostBinding('class.owl-dt-dialog-container'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTDialogContainerClass", null);
+    __decorate([
+        HostBinding('class.owl-dt-inline-container'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTInlineContainerClass", null);
+    __decorate([
+        HostBinding('class.owl-dt-container-disabled'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTContainerDisabledClass", null);
+    __decorate([
+        HostBinding('attr.id'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTContainerId", null);
+    __decorate([
+        HostBinding('@transformPicker'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], OwlDateTimeContainerComponent.prototype, "owlDTContainerAnimation", null);
+    __decorate([
+        HostListener('@transformPicker.done', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], OwlDateTimeContainerComponent.prototype, "handleContainerAnimationDone", null);
+    OwlDateTimeContainerComponent = __decorate([
+        Component({
+            exportAs: 'owlDateTimeContainer',
+            selector: 'owl-date-time-container',
+            template: "<div [cdkTrapFocus]=\"picker.pickerMode !== 'inline'\" [@fadeInPicker]=\"picker.pickerMode === 'inline'? '' : 'enter'\" class=\"owl-dt-container-inner\"><div class=\"owl-dt-container-inner-wrapper\"><owl-date-time-calendar *ngIf=\"pickerType === 'both' || pickerType === 'calendar'\" class=\"owl-dt-container-row\" [firstDayOfWeek]=\"picker.firstDayOfWeek\" [(pickerMoment)]=\"pickerMoment\" [selected]=\"picker.selected\" [selecteds]=\"picker.selecteds\" [selectMode]=\"picker.selectMode\" [minDate]=\"picker.minDateTime\" [maxDate]=\"picker.maxDateTime\" [dateFilter]=\"picker.dateTimeFilter\" [startView]=\"picker.startView\" [hideOtherMonths]=\"picker.hideOtherMonths\" (yearSelected)=\"picker.selectYear($event)\" (monthSelected)=\"picker.selectMonth($event)\" (selectedChange)=\"dateSelected($event)\"></owl-date-time-calendar><owl-date-time-timer *ngIf=\"pickerType === 'both' || pickerType === 'timer'\" class=\"owl-dt-container-row\" [pickerMoment]=\"pickerMoment\" [minDateTime]=\"picker.minDateTime\" [maxDateTime]=\"picker.maxDateTime\" [showSecondsTimer]=\"picker.showSecondsTimer\" [hour12Timer]=\"picker.hour12Timer\" [stepHour]=\"picker.stepHour\" [stepMinute]=\"picker.stepMinute\" [stepSecond]=\"picker.stepSecond\" (selectedChange)=\"timeSelected($event)\"></owl-date-time-timer><div *ngIf=\"picker.isInRangeMode\" role=\"radiogroup\" class=\"owl-dt-container-info owl-dt-container-row\"><div role=\"radio\" [tabindex]=\"activeSelectedIndex === 0 ? 0 : -1\" [attr.aria-checked]=\"activeSelectedIndex === 0\" class=\"owl-dt-control owl-dt-container-range owl-dt-container-from\" [ngClass]=\"{'owl-dt-container-info-active': activeSelectedIndex === 0}\" (click)=\"handleClickOnInfoGroup($event, 0)\" (keydown)=\"handleKeydownOnInfoGroup($event, to, 0)\" #from><span class=\"owl-dt-control-content owl-dt-container-range-content\" tabindex=\"-1\"><span class=\"owl-dt-container-info-label\">{{fromLabel}}:</span> <span class=\"owl-dt-container-info-value\">{{fromFormattedValue}}</span></span></div><div role=\"radio\" [tabindex]=\"activeSelectedIndex === 1 ? 0 : -1\" [attr.aria-checked]=\"activeSelectedIndex === 1\" class=\"owl-dt-control owl-dt-container-range owl-dt-container-to\" [ngClass]=\"{'owl-dt-container-info-active': activeSelectedIndex === 1}\" (click)=\"handleClickOnInfoGroup($event, 1)\" (keydown)=\"handleKeydownOnInfoGroup($event, from, 1)\" #to><span class=\"owl-dt-control-content owl-dt-container-range-content\" tabindex=\"-1\"><span class=\"owl-dt-container-info-label\">{{toLabel}}:</span> <span class=\"owl-dt-container-info-value\">{{toFormattedValue}}</span></span></div></div><div *ngIf=\"showControlButtons\" class=\"owl-dt-container-buttons owl-dt-container-row\"><button class=\"owl-dt-control owl-dt-control-button owl-dt-container-control-button\" type=\"button\" tabindex=\"0\" (click)=\"onCancelClicked($event)\"><span class=\"owl-dt-control-content owl-dt-control-button-content\" tabindex=\"-1\">{{cancelLabel}}</span></button> <button class=\"owl-dt-control owl-dt-control-button owl-dt-container-control-button\" type=\"button\" tabindex=\"0\" (click)=\"onSetClicked($event)\"><span class=\"owl-dt-control-content owl-dt-control-button-content\" tabindex=\"-1\">{{setLabel}}</span></button></div></div><ng-container *ngTemplateOutlet=\"userTemplate\"></ng-container></div>",
+            styles: [""],
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            preserveWhitespaces: false,
+            animations: [
+                owlDateTimePickerAnimations.transformPicker,
+                owlDateTimePickerAnimations.fadeInPicker
+            ]
+        }),
+        __param(3, Optional()),
+        __param(4, Optional()), __param(4, Inject(USER_TEMPLATE)),
+        __metadata("design:paramtypes", [ChangeDetectorRef,
+            ElementRef,
+            OwlDateTimeIntl,
+            DateTimeAdapter,
+            TemplateRef])
+    ], OwlDateTimeContainerComponent);
     return OwlDateTimeContainerComponent;
 }());
 export { OwlDateTimeContainerComponent };

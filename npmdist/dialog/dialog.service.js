@@ -1,3 +1,15 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { Inject, Injectable, InjectionToken, Injector, Optional, SkipSelf, TemplateRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { OwlDialogConfig } from './dialog-config.class';
@@ -33,11 +45,9 @@ var OwlDialogService = (function () {
         this._openDialogsAtThisLevel = [];
         this._afterOpenAtThisLevel = new Subject();
         this._afterAllClosedAtThisLevel = new Subject();
-        this.afterAllClosed = defer(function () {
-            return _this._openDialogsAtThisLevel.length ?
-                _this._afterAllClosed :
-                _this._afterAllClosed.pipe(startWith(undefined));
-        });
+        this.afterAllClosed = defer(function () { return _this._openDialogsAtThisLevel.length ?
+            _this._afterAllClosed :
+            _this._afterAllClosed.pipe(startWith(undefined)); });
         if (!parentDialog && location) {
             location.subscribe(function () { return _this.closeAll(); });
         }
@@ -179,18 +189,18 @@ var OwlDialogService = (function () {
             }
         }
     };
-    OwlDialogService.decorators = [
-        { type: Injectable },
-    ];
-    OwlDialogService.ctorParameters = function () { return [
-        { type: Overlay, },
-        { type: Injector, },
-        { type: Location, decorators: [{ type: Optional },] },
-        { type: undefined, decorators: [{ type: Inject, args: [OWL_DIALOG_SCROLL_STRATEGY,] },] },
-        { type: OwlDialogConfig, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DIALOG_DEFAULT_OPTIONS,] },] },
-        { type: OwlDialogService, decorators: [{ type: Optional }, { type: SkipSelf },] },
-        { type: OverlayContainer, },
-    ]; };
+    OwlDialogService = __decorate([
+        Injectable(),
+        __param(2, Optional()),
+        __param(3, Inject(OWL_DIALOG_SCROLL_STRATEGY)),
+        __param(4, Optional()), __param(4, Inject(OWL_DIALOG_DEFAULT_OPTIONS)),
+        __param(5, Optional()), __param(5, SkipSelf()),
+        __metadata("design:paramtypes", [Overlay,
+            Injector,
+            Location, Function, OwlDialogConfig,
+            OwlDialogService,
+            OverlayContainer])
+    ], OwlDialogService);
     return OwlDialogService;
 }());
 export { OwlDialogService };

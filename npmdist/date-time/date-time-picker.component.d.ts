@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, EventEmitter, InjectionToken, NgZone, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { BlockScrollStrategy, Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
+import { ChangeDetectorRef, EventEmitter, InjectionToken, Injector, NgZone, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { OwlDialogService } from '../dialog';
 import { DateTimeAdapter } from './adapter/date-time-adapter.class';
 import { OwlDateTimeFormats } from './adapter/date-time-format.class';
+import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
 import { OwlDateTime, PickerMode, PickerType, SelectMode } from './date-time.class';
-import { OwlDialogService } from '../dialog';
 export declare const OWL_DTPICKER_SCROLL_STRATEGY: InjectionToken<() => ScrollStrategy>;
 export declare function OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY(overlay: Overlay): () => BlockScrollStrategy;
 export declare const OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER: {
@@ -17,11 +17,13 @@ export declare class OwlDateTimeComponent<T> extends OwlDateTime<T> implements O
     private viewContainerRef;
     private dialogService;
     private ngZone;
+    private injector;
     protected changeDetector: ChangeDetectorRef;
     protected dateTimeAdapter: DateTimeAdapter<T>;
     private defaultScrollStrategy;
     protected dateTimeFormats: OwlDateTimeFormats;
     private document;
+    private userTemplate;
     backdropClass: string | string[];
     panelClass: string | string[];
     private _startAt;
@@ -35,6 +37,7 @@ export declare class OwlDateTimeComponent<T> extends OwlDateTime<T> implements O
     private _opened;
     opened: boolean;
     scrollStrategy: ScrollStrategy;
+    preferRightAlign: boolean;
     closeOnSelect: boolean;
     afterPickerClosed: EventEmitter<any>;
     afterPickerOpen: EventEmitter<any>;
@@ -63,7 +66,7 @@ export declare class OwlDateTimeComponent<T> extends OwlDateTime<T> implements O
     readonly selectMode: SelectMode;
     readonly isInSingleMode: boolean;
     readonly isInRangeMode: boolean;
-    constructor(overlay: Overlay, viewContainerRef: ViewContainerRef, dialogService: OwlDialogService, ngZone: NgZone, changeDetector: ChangeDetectorRef, dateTimeAdapter: DateTimeAdapter<T>, defaultScrollStrategy: () => ScrollStrategy, dateTimeFormats: OwlDateTimeFormats, document: any);
+    constructor(overlay: Overlay, viewContainerRef: ViewContainerRef, dialogService: OwlDialogService, ngZone: NgZone, injector: Injector, changeDetector: ChangeDetectorRef, dateTimeAdapter: DateTimeAdapter<T>, defaultScrollStrategy: () => ScrollStrategy, dateTimeFormats: OwlDateTimeFormats, document: any);
     ngOnInit(): void;
     ngOnDestroy(): void;
     registerInput(input: OwlDateTimeInputDirective<T>): void;
@@ -73,8 +76,8 @@ export declare class OwlDateTimeComponent<T> extends OwlDateTime<T> implements O
     selectMonth(normalizedMonth: T): void;
     close(): void;
     confirmSelect(event?: any): void;
-    private openAsDialog();
-    private openAsPopup();
-    private createPopup();
-    private createPopupPositionStrategy();
+    private openAsDialog;
+    private openAsPopup;
+    private createPopup;
+    private createPopupPositionStrategy;
 }

@@ -1,3 +1,15 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 import { Inject, Input, Optional } from '@angular/core';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { DateTimeAdapter } from './adapter/date-time-adapter.class';
@@ -14,7 +26,7 @@ var OwlDateTime = (function () {
         this._stepHour = 1;
         this._stepMinute = 1;
         this._stepSecond = 1;
-        this._firstDayOfWeek = 0;
+        this._firstDayOfWeek = 1;
         this._hideOtherMonths = false;
         this.dateTimeChecker = function (dateTime) {
             return !!dateTime &&
@@ -136,20 +148,50 @@ var OwlDateTime = (function () {
     OwlDateTime.prototype.getValidDate = function (obj) {
         return (this.dateTimeAdapter.isDateInstance(obj) && this.dateTimeAdapter.isValid(obj)) ? obj : null;
     };
-    OwlDateTime.ctorParameters = function () { return [
-        { type: DateTimeAdapter, decorators: [{ type: Optional },] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [OWL_DATE_TIME_FORMATS,] },] },
-    ]; };
-    OwlDateTime.propDecorators = {
-        "showSecondsTimer": [{ type: Input },],
-        "hour12Timer": [{ type: Input },],
-        "startView": [{ type: Input },],
-        "stepHour": [{ type: Input },],
-        "stepMinute": [{ type: Input },],
-        "stepSecond": [{ type: Input },],
-        "firstDayOfWeek": [{ type: Input },],
-        "hideOtherMonths": [{ type: Input },],
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTime.prototype, "showSecondsTimer", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTime.prototype, "hour12Timer", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], OwlDateTime.prototype, "startView", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], OwlDateTime.prototype, "stepHour", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], OwlDateTime.prototype, "stepMinute", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], OwlDateTime.prototype, "stepSecond", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], OwlDateTime.prototype, "firstDayOfWeek", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], OwlDateTime.prototype, "hideOtherMonths", null);
+    OwlDateTime = __decorate([
+        __param(0, Optional()),
+        __param(1, Optional()), __param(1, Inject(OWL_DATE_TIME_FORMATS)),
+        __metadata("design:paramtypes", [DateTimeAdapter, Object])
+    ], OwlDateTime);
     return OwlDateTime;
 }());
 export { OwlDateTime };

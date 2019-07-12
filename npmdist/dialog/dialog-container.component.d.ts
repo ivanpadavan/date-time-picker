@@ -33,8 +33,8 @@ export declare class OwlDialogContainerComponent extends BasePortalOutlet implem
     onAnimationStart(event: AnimationEvent): void;
     onAnimationDone(event: AnimationEvent): void;
     startExitAnimation(): void;
-    private calculateZoomOrigin(event);
-    private savePreviouslyFocusedElement();
-    private trapFocus();
-    private restoreFocus();
+    private calculateZoomOrigin;
+    private savePreviouslyFocusedElement;
+    private trapFocus;
+    private restoreFocus;
 }

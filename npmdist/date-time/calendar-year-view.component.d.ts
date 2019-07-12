@@ -42,14 +42,14 @@ export declare class OwlYearViewComponent<T> implements OnInit, AfterContentInit
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
     selectCalendarCell(cell: CalendarCell): void;
-    private selectMonth(month);
+    private selectMonth;
     handleCalendarKeydown(event: KeyboardEvent): void;
-    private generateMonthList();
-    private createMonthCell(month);
-    private isMonthEnabled(month);
-    private getMonthInCurrentYear(date);
-    private setSelectedMonths();
-    private hasSameYear(dateLeft, dateRight);
-    private getValidDate(obj);
-    private focusActiveCell();
+    private generateMonthList;
+    private createMonthCell;
+    private isMonthEnabled;
+    private getMonthInCurrentYear;
+    private setSelectedMonths;
+    private hasSameYear;
+    private getValidDate;
+    private focusActiveCell;
 }
