@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{"USER_TEMPLATE":{"__symbolic":"new","expression":{"__symbolic":"reference","module":"@angular/core","name":"InjectionToken","line":4,"character":8},"arguments":["USER_TEMPLATE"]},"USER_TEMPLATE_PROVIDER":{"__symbolic":"error","message":"Lambda not supported","line":6,"character":38}}}]
